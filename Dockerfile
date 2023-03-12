@@ -1,5 +1,4 @@
-# Base image to use
-FROM node:latest
+FROM node:18-alpine AS base
 
 # Create app directory
 WORKDIR /usr/src/app
@@ -14,5 +13,9 @@ RUN npm install
 # Bundle app source
 COPY . .
 
+RUN npm run build
+
+ENV NODE_ENV production
+
 EXPOSE 8080
-CMD [ "node", "server.js" ]
+CMD [ "npm", "start" ]
